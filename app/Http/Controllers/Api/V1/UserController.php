@@ -11,6 +11,7 @@ use App\Http\Resources\User\UserResource;
 use App\Http\Services\User\EmailAuthCodeService;
 use App\Http\Services\User\PersonalTokenService;
 use App\Http\Services\User\UserService;
+use App\Models\ProjectRole;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
@@ -74,11 +75,6 @@ class UserController extends Controller
 
     public function me(): JsonResource
     {
-        /**
-         * @var User $user
-         */
-
-        $user = auth()->user();
         return (new UserResource(auth()->user()));
     }
 
