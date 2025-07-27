@@ -10,7 +10,7 @@ class ProjectPermission extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'tech_name', 'name', 'description'];
+    protected $fillable = ['id', 'tech_name', 'name', 'description', 'category'];
 
 
     public function roles(): BelongsToMany

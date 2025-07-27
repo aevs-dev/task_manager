@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums\Rbac\Projects;
+namespace App\Enums\Rbac\Project;
 
 enum RoleTypeEnum: string
 {

@@ -3,7 +3,6 @@
 namespace App\Http\Services\User;
 
 use App\Models\EmailAuthCode;
-use Illuminate\Database\Eloquent\Model;
 
 class EmailAuthCodeService
 {

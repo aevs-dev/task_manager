@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, EagerLoadPivotTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -44,13 +46,21 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-//    public function sendEmailVerificationNotification()
-//    {
-//    }
-
-
-    public function projects(): HasMany
+    public function ownProjects(): HasMany
     {
         return $this->hasMany(Project::class);
+    }
+
+    public function projects(): BelongsToMany
+    {
+        return $this->belongsToMany(Project::class,
+            'user_projects', 'user_id',
+            'project_id')->withTimestamps()->using(UserProject::class)->withPivot(['project_role_id']);
+    }
+
+
+    public function isAdmin(): bool|null
+    {
+        return $this->is_admin;
     }
 }
